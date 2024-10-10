@@ -5,9 +5,9 @@ require 'functions.php';
 
 $gagal = '';
 
-$datas = viewTask();
+$tasks = viewTask();
 
-doneTask();
+doneTask(); 
 
 deleteTask();
 
@@ -38,142 +38,7 @@ if (isset($_GET['edit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TO DO LIST</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Poppins;
-            background-color: #603F26;
-            color: #FFEAC5;
-        }
-
-        a {
-            color: #FFEAC5;
-        }
-
-        table {
-            width: 100%;
-            text-align: center;
-            border-collapse: collapse;
-        }
-
-        table,
-        th,
-        td {
-            border: 1px solid;
-        }
-
-        td {
-            padding: 10px;
-
-        }
-
-        .container {
-            width: 100%;
-            display: flex;
-            padding: 20px;
-        }
-
-        .form-container {
-            width: 100%;
-            max-width: 400px;
-            padding: 30px 25px;
-            background-color: #6C4E31;
-            border-radius: 10px;
-        }
-
-        .form-container h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .table-container {
-            width: 100%;
-            padding: 20px;
-            overflow-x: auto;
-        }
-
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            margin: 10px 0;
-        }
-
-        ::placeholder {
-            color: #6C4E31;
-            opacity: 1;
-        }
-
-        input[type="text"],
-        input[type="date"] {
-            padding: 15px 10px;
-            border-radius: 5px;
-            border: none;
-            outline: none;
-            font-weight: 700;
-            background-color: #FFDBB5;
-            color: #603F26;
-        }
-
-        input[type="submit"] {
-            padding: 10px;
-            border-radius: 5px;
-            border: none;
-            cursor: pointer;
-            font-weight: 800;
-            background-color: #FFDBB5;
-            color: #603F26;
-        }
-
-        .status-checkbox {
-            display: none;
-        }
-
-        .status-checkbox+label {
-            cursor: pointer;
-        }
-
-        .status-checkbox+label .check-icon {
-            display: inline-block;
-        }
-
-        .status-checkbox+label .uncheck-icon {
-            display: none;
-        }
-
-        .status-checkbox:checked+label .check-icon {
-            display: none;
-        }
-
-        .status-checkbox:checked+label .uncheck-icon {
-            display: inline-block;
-        }
-
-        @media only screen and (max-width: 600px) {
-            .container {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .form-container {
-                width: 100%;
-            }
-
-            .table-container {
-                width: 100%;
-                padding: 0;
-                margin: 20px;
-            }
-
-            table {
-                width: 100%;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -196,7 +61,7 @@ if (isset($_GET['edit'])) {
                     <input type="text" name="deskripsi" value="<?php echo $task_edit ? $task_edit['deskripsi'] : '' ?>" placeholder="Masukkan deskripsi tugas">
                 </div>
                 <div class="input-group">
-                    <input type="date" name="tanggal" value="<?php echo $task_edit ? $task_edit['tanggal'] : '' ?>" placeholder="Masukkan tenggat tugas">
+                    <input type="date" name="tanggal" value="<?php echo date('Y-m-d', strtotime($task['tanggal'] ?? 'now')); ?>" placeholder="Masukkan tenggat tugas">
                 </div>
                 <div class="input-group">
                     <input type="submit" name="submit" value="<?php echo $task_edit ? 'Update' : 'Tambah' ?>">
@@ -217,28 +82,29 @@ if (isset($_GET['edit'])) {
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($datas as $key => $data) { ?>
+                    <?php foreach ($tasks as $key => $task) { 
+                        $formattedDate = date('d-m-Y', strtotime($task['tanggal']));
+                    ?>
                         <tr>
                             <td><?php echo $key + 1; ?></td>
-                            <td><?php echo $data['judul']; ?></td>
-                            <td><?php echo $data['deskripsi']; ?></td>
-                            <td><?php echo $data['tanggal']; ?></td>
-                            <td><?php echo $data['status']; ?></td>
-                            </td>
-                            <td class="edit_btn"><a href="index.php?edit=<?php echo $data['id']; ?>"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <td><?php echo $task['judul']; ?></td>
+                            <td><?php echo $task['deskripsi']; ?></td>
+                            <td><?php echo $formattedDate; ?></td>
+                            <td><?php echo $task['status']; ?></td>
+                            <td class="edit_btn"><a href="index.php?edit=<?php echo $task['id']; ?>"><i class="fa-solid fa-pen-to-square"></i></a>
                             </td>
                             <td>
                                 <input type="checkbox"
-                                    id="check_<?php echo $data['id']; ?>"
+                                    id="check_<?php echo $task['id']; ?>"
                                     class="status-checkbox"
-                                    onclick="window.location.href = 'index.php?done=<?php echo $data['id']; ?>&status=<?php echo $data['status']; ?>'"
-                                    <?php echo $data['status'] == 'sudah' ? 'checked' : ''; ?>>
-                                <label for="check_<?php echo $data['id']; ?>">
+                                    onclick="window.location.href = 'index.php?done=<?php echo $task['id']; ?>&status=<?php echo $task['status']; ?>'"
+                                    <?php echo $task['status'] == 'sudah' ? 'checked' : ''; ?>>
+                                <label for="check_<?php echo $task['id']; ?>">
                                     <i class="fa-solid fa-square-check check-icon"></i>
                                     <i class="fa-solid fa-circle-xmark uncheck-icon"></i>
                                 </label>
                             </td>
-                            <td class="delete_btn"><a href="index.php?delete=<?php echo $data['id']; ?>" onclick="return confirm('Apakah anda yakin ingin menghapus?')"><i class="fa-solid fa-trash"></i></a>
+                            <td class="delete_btn"><a href="index.php?delete=<?php echo $task['id']; ?>" onclick="return confirm('Apakah anda yakin ingin menghapus?')"><i class="fa-solid fa-trash"></i></a>
                             </td>
                         </tr>
                     <?php } ?>

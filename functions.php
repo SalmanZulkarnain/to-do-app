@@ -11,6 +11,12 @@ function insertTask() {
         $deskripsi = $_POST['deskripsi'];
         $tanggal = $_POST['tanggal'];
         
+        if (empty($tanggal)) {
+            $tanggal = date('d/m/Y');
+        } else {
+            $tanggal = date('d/m/Y', strtotime($tanggal));
+        }
+
         if (empty($judul) && empty($deskripsi) && empty($tanggal)) {
             $gagal = "Silakan isi form tugas.";
         } elseif (empty($judul)) {
@@ -63,7 +69,11 @@ function ambilTask() {
     $id = $_GET['edit'];
     $ambil = $db->query("SELECT * FROM tasks WHERE id = '$id'");
     
-    return $ambil->fetchArray(SQLITE3_ASSOC);
+    $task = $ambil->fetchArray(SQLITE3_ASSOC);
+    if ($task) {
+        $task['tanggal'] = date('d/m/Y', strtotime($task['tanggal']));
+    }
+    return $task;
 }   
 
 function updateTask() {
@@ -74,6 +84,12 @@ function updateTask() {
         $judul = $_POST['judul'];
         $deskripsi = $_POST['deskripsi'];
         $tanggal = $_POST['tanggal'];
+
+        if (empty($tanggal)) {
+            $tanggal = date('d/m/Y');
+        } else {
+            $tanggal = date('d/m/Y', strtotime($tanggal));
+        }
         
         if (!empty($judul)) {
             $db->query("UPDATE tasks SET judul = '$judul', deskripsi = '$deskripsi', tanggal = '$tanggal' WHERE id = '$id'");
