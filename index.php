@@ -61,7 +61,7 @@ if (isset($_GET['edit'])) {
                     <input type="text" name="deskripsi" value="<?php echo $task_edit ? $task_edit['deskripsi'] : '' ?>" placeholder="Masukkan deskripsi tugas">
                 </div>
                 <div class="input-group">
-                    <input type="date" name="tanggal" value="<?php echo date('Y-m-d', strtotime($task['tanggal'] ?? 'now')); ?>" placeholder="Masukkan tenggat tugas">
+                    <input type="date" name="tanggal" value="<?php echo $task_edit ? $task_edit['tanggal'] : '' ?>" placeholder="Masukkan tenggat tugas">
                 </div>
                 <div class="input-group">
                     <input type="submit" name="submit" value="<?php echo $task_edit ? 'Update' : 'Tambah' ?>">
@@ -83,7 +83,7 @@ if (isset($_GET['edit'])) {
                 </thead>
                 <tbody>
                     <?php foreach ($tasks as $key => $task) { 
-                        $formattedDate = date('d-m-Y', strtotime($task['tanggal']));
+                        $formattedDate = date('d/m/Y', strtotime($task['tanggal']));
                     ?>
                         <tr>
                             <td><?php echo $key + 1; ?></td>

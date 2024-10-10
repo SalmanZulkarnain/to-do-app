@@ -10,11 +10,13 @@ function insertTask() {
         $judul = $_POST['judul'];
         $deskripsi = $_POST['deskripsi'];
         $tanggal = $_POST['tanggal'];
-        
-        if (empty($tanggal)) {
-            $tanggal = date('d/m/Y');
+
+        $formattedDate = DateTime::createFromFormat('d/m/Y', $tanggal);
+
+        if ($formattedDate) {
+            $tanggal = $formattedDate->format('Y-m-d');
         } else {
-            $tanggal = date('d/m/Y', strtotime($tanggal));
+            $gagal = "Format tanggal tidak valid.";
         }
 
         if (empty($judul) && empty($deskripsi) && empty($tanggal)) {
@@ -69,11 +71,7 @@ function ambilTask() {
     $id = $_GET['edit'];
     $ambil = $db->query("SELECT * FROM tasks WHERE id = '$id'");
     
-    $task = $ambil->fetchArray(SQLITE3_ASSOC);
-    if ($task) {
-        $task['tanggal'] = date('d/m/Y', strtotime($task['tanggal']));
-    }
-    return $task;
+    return $ambil->fetchArray(SQLITE3_ASSOC);
 }   
 
 function updateTask() {
@@ -85,14 +83,15 @@ function updateTask() {
         $deskripsi = $_POST['deskripsi'];
         $tanggal = $_POST['tanggal'];
 
-        if (empty($tanggal)) {
-            $tanggal = date('d/m/Y');
-        } else {
-            $tanggal = date('d/m/Y', strtotime($tanggal));
-        }
+        $formattedDate = DateTime::createFromFormat('d/m/Y', $tanggal);
+
+        if ($formattedDate) {
+            $tanggal = $formattedDate->format('Y-m-d');
+        } 
         
         if (!empty($judul)) {
             $db->query("UPDATE tasks SET judul = '$judul', deskripsi = '$deskripsi', tanggal = '$tanggal' WHERE id = '$id'");
+            header('Location: index.php');
         }
     }
 }
