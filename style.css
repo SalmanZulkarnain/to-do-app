@@ -45,28 +45,25 @@ td {
   border-radius: 10px;
 }
 
+
+.table-container {
+    width: 100%;
+    padding: 20px;
+    overflow-x: auto;
+}
 .form-container h1 {
   text-align: center;
   margin-bottom: 20px;
 }
-
-.table-container {
-  width: 100%;
-  padding: 20px;
-  overflow-x: auto;
-}
-
 .input-group {
   display: flex;
   flex-direction: column;
   margin: 10px 0;
 }
-
 ::placeholder {
   color: #6c4e31;
   opacity: 1;
 }
-
 input[type="text"],
 input[type="date"] {
   padding: 15px 10px;
@@ -88,26 +85,22 @@ input[type="submit"] {
   color: #603f26;
 }
 
+/* STATUS */
 .status-checkbox {
   display: none;
 }
-
 .status-checkbox + label {
   cursor: pointer;
 }
-
 .status-checkbox + label .check-icon {
   display: inline-block;
 }
-
 .status-checkbox + label .uncheck-icon {
   display: none;
 }
-
 .status-checkbox:checked + label .check-icon {
   display: none;
 }
-
 .status-checkbox:checked + label .uncheck-icon {
   display: inline-block;
 }
@@ -117,17 +110,14 @@ input[type="submit"] {
     flex-direction: column;
     align-items: center;
   }
-
   .form-container {
     width: 100%;
   }
-
   .table-container {
     width: 100%;
     padding: 0;
     margin: 20px;
   }
-
   table {
     width: 100%;
   }
