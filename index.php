@@ -38,7 +38,7 @@ if (isset($_GET['edit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TO DO LIST</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style/style.css">
 </head>
 
 <body>
@@ -55,7 +55,7 @@ if (isset($_GET['edit'])) {
                 <?php endif; ?>
 
                 <div class="input-group">
-                    <input type="text" name="judul" value="<?php echo $task_edit ? $task_edit['judul'] : '' ?>" placeholder="Masukkan nama tugas">
+                    <input type="text" name="judul" value="<?php echo $task_edit ? $task_edit['judul'] : '' ?>" placeholder="Masukkan nama tugas" autofocus>
                 </div>
                 <div class="input-group">
                     <input type="text" name="deskripsi" value="<?php echo $task_edit ? $task_edit['deskripsi'] : '' ?>" placeholder="Masukkan deskripsi tugas">

@@ -29,4 +29,4 @@ Aplikasi To-Do List sederhana berbasis web yang memungkinkan pengguna untuk meng
 
 > **SEGALA KEKURANGAN MOHON DIBERITAHU*
 
-!["Tolong"](To-Do_SS.png)
+!["To Do"](screenshot/To-Do_SS.png)
