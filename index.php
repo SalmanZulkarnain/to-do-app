@@ -1,14 +1,12 @@
 <?php
-
 require 'db.php';
 require 'functions.php';
 
 $gagal = '';
+$task_edit = null;
 
 $tasks = viewTask();
-
 doneTask(); 
-
 deleteTask();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -24,7 +22,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-$task_edit = null;
 if (isset($_GET['edit'])) {
     $task_edit = ambilTask();
 }
@@ -53,7 +50,6 @@ if (isset($_GET['edit'])) {
                 <?php if ($task_edit): ?>
                     <input type="hidden" name="id" value="<?php echo $task_edit['id']; ?>">
                 <?php endif; ?>
-
                 <div class="input-group">
                     <input type="text" name="judul" value="<?php echo $task_edit ? $task_edit['judul'] : '' ?>" placeholder="Masukkan nama tugas" autofocus>
                 </div>

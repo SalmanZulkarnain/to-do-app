@@ -1,5 +1,4 @@
 <?php 
-
 require 'db.php';
 
 function insertTask() {
@@ -25,9 +24,9 @@ function insertTask() {
             $gagal = "Judul harus diisi.";
         } else {
             $stmt = $db->prepare("INSERT INTO tasks (judul, deskripsi, tanggal) VALUES (:judul, :deskripsi, :tanggal)");
-            $stmt->bindParam(':judul', $judul, SQLITE3_TEXT,);
-            $stmt->bindParam(':deskripsi', $deskripsi, SQLITE3_TEXT,);
-            $stmt->bindParam(':tanggal', $tanggal, SQLITE3_TEXT,);
+            $stmt->bindParam(':judul', $judul, SQLITE3_TEXT);
+            $stmt->bindParam(':deskripsi', $deskripsi, SQLITE3_TEXT);
+            $stmt->bindParam(':tanggal', $tanggal, SQLITE3_TEXT);
             
             if($stmt->execute()) {
                 header('Location: index.php');
@@ -64,6 +63,7 @@ function doneTask(){
         } else {
             $status = 'belum';
         }
+
         $stmt = $db->prepare("UPDATE tasks SET status = :status WHERE id = :id");
         $stmt->bindParam(':id', $id, SQLITE3_INTEGER);
         $stmt->bindParam(':status', $status, SQLITE3_TEXT);
@@ -74,6 +74,7 @@ function doneTask(){
         }
     }
 }
+
 function ambilTask() {
     global $db;
 
@@ -82,6 +83,7 @@ function ambilTask() {
     }
 
     $id = $_GET['edit'];
+
     $stmt = $db->prepare("SELECT * FROM tasks WHERE id = :id");
     $stmt->bindParam(':id', $id, SQLITE3_INTEGER);
     $result = $stmt->execute();
@@ -106,7 +108,6 @@ function updateTask() {
         } 
         
         if (!empty($judul)) {
-
             $stmt = $db->prepare("UPDATE tasks SET judul = :judul, deskripsi = :deskripsi, tanggal = :tanggal WHERE id = :id");
             $stmt->bindParam(':id', $id, SQLITE3_INTEGER);
             $stmt->bindParam(':judul', $judul, SQLITE3_TEXT);

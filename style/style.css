@@ -30,10 +30,13 @@ td {
   padding: 10px;
 }
 
+
+
 .container {
-  width: 100%;
+  width: 1440px;
   display: flex;
   padding: 20px;
+  margin: auto;
 }
 
 .form-container {
