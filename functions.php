@@ -5,7 +5,7 @@ function insertTask() {
     global $db;
     
     $gagal = '';
-    if(isset($_POST['submit'])) {
+    if (isset($_POST['submit'])) {
         $judul = $_POST['judul'];
         $deskripsi = $_POST['deskripsi'];
         $tanggal = $_POST['tanggal'];
@@ -28,7 +28,7 @@ function insertTask() {
             $stmt->bindParam(':deskripsi', $deskripsi, SQLITE3_TEXT);
             $stmt->bindParam(':tanggal', $tanggal, SQLITE3_TEXT);
             
-            if($stmt->execute()) {
+            if ($stmt->execute()) {
                 header('Location: index.php');
             } else {
                 $gagal = "Gagal menyimpan data ke database";
@@ -44,7 +44,7 @@ function viewTask() {
     
     $result = $db->query("SELECT * FROM tasks");
     $data = [];
-    while($row = $result->fetchArray(SQLITE3_ASSOC)) {
+    while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
         $data[] = $row;
     }
 
@@ -54,7 +54,7 @@ function viewTask() {
 function doneTask() {
     global $db;
 
-    if(isset($_GET['done'])) {
+    if (isset($_GET['done'])) {
         $status = 'belum';
         $id = $_GET['done'];
         
@@ -68,7 +68,7 @@ function doneTask() {
         $stmt->bindParam(':id', $id, SQLITE3_INTEGER);
         $stmt->bindParam(':status', $status, SQLITE3_TEXT);
         
-        if($stmt->execute()) {
+        if ($stmt->execute()) {
             header('Location: index.php');
             exit;
         }
@@ -95,7 +95,7 @@ function updateTask() {
     global $db;
 
     $gagal = '';
-    if(isset($_POST['id'])) {
+    if (isset($_POST['id'])) {
         $id = $_POST['id'];
         $judul = $_POST['judul'];
         $deskripsi = $_POST['deskripsi'];
@@ -114,7 +114,7 @@ function updateTask() {
             $stmt->bindParam(':deskripsi', $deskripsi, SQLITE3_TEXT);
             $stmt->bindParam(':tanggal', $tanggal, SQLITE3_TEXT);
 
-            if($stmt->execute()) {
+            if ($stmt->execute()) {
                 header('Location: index.php');
             } else {
                 $gagal = "Gagal mengupdate data";
@@ -128,12 +128,12 @@ function deleteTask() {
     global $db;
 
     $gagal = '';
-    if(isset($_GET['delete'])) {
+    if (isset($_GET['delete'])) {
         $id = $_GET['delete'];
         $stmt = $db->prepare("DELETE FROM tasks WHERE id = :id");
         $stmt->bindParam(':id', $id, SQLITE3_INTEGER);
         
-        if($stmt->execute()) {
+        if ($stmt->execute()) {
             header('Location: index.php');
             exit;
         } else {
