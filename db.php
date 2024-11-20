@@ -1,7 +1,7 @@
 <?php 
 $db = new SQLite3('db_task.sqlite');
 
-if(!$db) {
+if (!$db) {
     echo $db->lastErrorMsg();
 }
 
