@@ -51,7 +51,7 @@ function viewTask() {
     return $data;
 }
 
-function doneTask(){
+function doneTask() {
     global $db;
 
     if(isset($_GET['done'])) {
